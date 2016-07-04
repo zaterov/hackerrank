@@ -1,0 +1,385 @@
+
+
+string_validators.py
+--------------------
+#!/usr/bin/env python
+
+#  s = 'qA2'
+s = raw_input()
+tests = ['isalnum', 'isalpha', 'isdigit', 'islower', 'isupper']
+
+
+def check(s, test):
+    for c in s:
+        if getattr(c, test)():
+            return True
+        return False
+
+if 0 <= len(s) <= 1000:
+    for test in tests:
+        print(check(s, test))
+
+
+'''
+from the discussions:
+    'any'!  as in print any(c.isalnum()  for c in str)
+
+# uses all five string methods on each character in input string
+# prints True if at least one character made the method return True
+print "\n".join([str(i) for i in (any(i) for i in (list(zip(*[[c.isalnum(), c.isalpha(), c.isdigit(), c.islower(), c.isupper()] for c in raw_input()]))))])
+
+or a little less cluttered (perhaps):
+
+    # user input
+    s = raw_input()
+
+    # uses all 5 methods on each character and creates a list for each,
+    # containing the results of each method used on the character.
+    newList = [[c.isalnum(), c.isalpha(), c.isdigit(), c.islower(), c.isupper()] for c in s]
+
+    # rotates lists clockwise to get lists of each method instead
+    rotated = list(zip(*newList))
+
+    # prints whether or not a True is present for each List
+    print "\n".join([str(i) for i in (any(i) for i in rotated)])
+
+
+
+temp_converter.py
+-----------------
+#!/usr/bin/env python
+
+def fahrenheit(T):
+    return ((float(9)/5)*T + 32)
+def celsius(T):
+    return (float(5)/9)*(T-32)
+def display(T):
+    print "{0:.1f}".format(T)
+
+t = raw_input('temp (nnF or nnC)')
+
+if t.endswith('F'):
+    display(celsius(int(t[:-1])))
+else:
+    display(fahrenheit(int(t[:-1])))
+
+
+list_comprehensions.py
+----------------------
+#!/usr/bin/env python
+
+x, y, z, n = (int(input()) for _ in range(4))
+print([[a, b, c] for a in range(0, x+1) for b in range(0, y+1) for c in range(0, z+1) if a + b + c != n])
+
+
+second_highest_in_list.py
+-------------------------
+#!/usr/bin/env python
+
+size = int(raw_input())
+data = set(map(int, raw_input().split()))
+data.remove(max(data))
+print(max(data))
+
+
+
+sort_nested_list.py
+-------------------
+#!/usr/bin/env python
+
+size = int(raw_input())
+
+l = []
+if 2 <= size <= 5:
+    for i in range(size):
+        name = raw_input()
+        grade = int(raw_input())
+        l.append([name, grade])
+
+
+G = sorted(l, key=lambda x: int(x[1]))
+G = G[1:]
+
+grade = G[0][1]
+
+names = [[0] for x in G if x[1] == grade]
+
+print('\n'.join([str(s) for s in sorted(names)]))
+
+
+'''
+data = set(map(int, raw_input().split()))
+data.remove(max(data))
+print(max(data))
+'''
+
+
+
+sets-symmetric_difference.py
+----------------------------
+#!/usr/bin/env python
+'''
+M = int(raw_input())
+S1 = set(map(int, raw_input().split()))
+N = int(raw_input())
+S2 = set(map(int, raw_input().split()))
+'''
+M = 4
+S1 = {2, 4, 5, 9}
+N = 4
+S2 = {2, 4, 11, 12}
+
+S = S2.difference(S1)
+S.update(S1.difference(S2))
+print("\n".join([str(s) for s in (sorted(list(S)))]))
+
+
+sorting_in_nested_lists.py
+--------------------------
+#!/usr/bin/env python
+
+size = int(raw_input())
+
+l = []
+grades = []
+if 2 <= size <= 5:
+    for _ in range(size):
+        name = raw_input()
+        grade = float(raw_input())
+        l.append([name, grade])
+        grades.append(grade)
+
+grade = sorted(list(set(grades)))[1]
+names = [x[0] for x in l if x[1] == grade]
+print('\n'.join([str(s) for s in sorted(names)]))
+
+
+'''
+data = set(map(float, raw_input().split()))
+data.remove(max(data))
+prfloat(max(data))
+'''
+
+
+
+swap_case.py
+------------
+#!/usr/bin/env python
+
+s = raw_input()
+x = []
+for i in s:
+    if i.isupper():
+        x.append(i.lower())
+    elif i.islower():
+        x.append(i.upper())
+    #  else:
+        #  x.append(i)
+
+print(''.join(x))
+
+
+text_alignment.py
+-----------------
+#!/usr/bin/env python
+
+#This must be an odd number
+thickness = int(raw_input())
+c = 'H'
+
+if 0 <= thickness <= 50:
+
+#Top Cone
+for i in range(thickness):
+        print (c*i).rjust(thickness-1)+c+(c*i).ljust(thickness-1)
+
+#Top Pillars
+for i in range(thickness+1):
+        print (c*thickness).center(thickness*2)+(c*thickness).center(thickness*6)
+
+#Middle Belt
+for i in range((thickness+1)/2):
+        print (c*thickness*5).center(thickness*6)
+
+#Bottom
+for i in range(thickness+1):
+        print (c*thickness).center(thickness*2)+(c*thickness).center(thickness*6)
+
+#Bottom Cone
+for i in range(thickness):
+        print ((c*(thickness-i-1)).rjust(thickness)+c+(c*(thickness-i-1)).ljust(thickness)).rjust(thickness*6)
+
+
+lists.py
+--------
+#!/usr/bin/env python
+'''
+Task
+Initialize your list (L = []) and follow the NN commands given over NN lines.
+
+Each command will be 11 of the 88 commands given above. The extend(LL) method will not be used. Each command will have its own value(s) separated by a space.
+
+Input Format
+
+The first line contains an integer, NN (the number of commands).
+The NN subsequent lines each contain one of the 88 commands described above.
+Sample Input
+12
+insert 0 5
+insert 1 10
+insert 0 6
+print
+remove 6
+append 9
+append 1
+sort
+print
+pop
+reverse
+print
+
+Sample Output
+
+[6, 5, 10]
+[1, 5, 9, 10]
+[9, 5, 1]
+'''
+
+L = []
+
+loops = int(raw_input())
+
+loop = 0
+while loop < loops:
+    command = raw_input().split()
+    if len(command) > 1:
+        getattr(L, command[0])(*(map(int, command[1:])))
+
+    elif command[0] == 'print':
+        print L
+    else:
+        getattr(L, command[0])()
+
+    loop += 1
+
+
+'''
+could have used this technique:
+    command, *args = input().rstrip().split()
+'''
+
+
+counting_substrings.py
+----------------------
+#!/usr/bin/env python
+
+s, pattern = [raw_input() for _ in range(2)]
+cnt = 0
+for i in range(len(s)):
+    if s[i:i+len(pattern)] == pattern:
+        cnt += 1
+print(cnt)
+
+
+alphabet_rangoli.py
+-------------------
+#!/usr/bin/env python
+import string
+
+size = int(input())
+alphabet = string.ascii_lowercase
+
+for i in range(size - 1, 0, -1):
+    #  print('i: {}'.format(i))
+    row = ["-"] * (size * 2 - 1)
+    for j in range(0, size - i):
+        row[size - 1 - j] = alphabet[j + i]
+        row[size - 1 + j] = alphabet[j + i]
+    print("-".join(row))
+
+for i in range(0, size):
+    row = ["-"] * (size * 2 - 1)
+    for j in range(0, size -i):
+        row[size - 1 - j] = alphabet[j + i]
+        row[size - 1 + j] = alphabet[j + i]
+    print("-".join(row))
+
+
+
+'''
+stolen because who really has time for this shit???
+interesting tho
+'''
+
+
+string_formatting.py
+--------------------
+#!/usr/bin/env python
+
+N = int(raw_input())
+
+if 1 <= N <= 99:
+    width = len('{0:b}'.format(N))
+
+    for i in xrange(1, N + 1):
+        print '{0:{width}d} {0:{width}o} {0:{width}X} {0:{width}b}'.format(i, width=width)
+
+'''
+the instructions neglect to say that the hex must be uppercase
+'''
+
+
+test.py
+-------
+#!/usr/bin/env python
+
+N = int(raw_input())
+s = set()
+for _ in range(N):
+    s.add(raw_input())
+
+print(len(s))
+
+
+set_add.py
+----------
+#!/usr/bin/env python
+
+N = int(raw_input())
+s = set()
+for _ in range(N):
+    s.add(raw_input())
+
+print(len(s))
+
+
+vpyprinter.py
+-------------
+#!/usr/bin/env python
+from __future__ import print_function
+
+import os
+
+files = []
+for f in os.listdir("."):
+    if f.endswith(".py"):
+        files.append(f)
+
+
+def sorted_by_time(files):
+    mtime = lambda fm: os.stat(fm).st_ctime
+    return list((sorted(files, key=mtime)))
+
+
+lines = []
+for f in sorted_by_time(files):
+    lines.append(("\n\n{}\n{}".format(f, "-" * len(f))))
+    with open(f, 'r') as r:
+        for line in r:
+            #  lines.append(line.rstrip())
+            lines.append((line.rstrip()))
+
+print(*lines, sep='\n')
+
+with open('hackerrank-files.txt', 'w') as w:
+    w.write('\n'.join(lines))
